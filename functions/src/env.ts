@@ -23,4 +23,5 @@ const verifyEnv = (envName: keyof EnvConfig): string => {
   return value;
 };
 
-export const PLACEHOlDER = verifyEnv("placeholder");
+export const EMAIL_SENDER_DOMAIN = verifyEnv("email_sender_domain");
+export const MAILGUN_API_KEY = verifyEnv("mailgun_api_key");
