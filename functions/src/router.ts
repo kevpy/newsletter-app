@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-type HandlerResult = "failed" | "succeed" | "not_found" | "conflict";
+export type HandlerResult = "failed" | "succeed" | "not_found" | "conflict";
 
 export type Validator<T> = (
   requestbody: Record<string, unknown | undefined>
