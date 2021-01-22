@@ -1,8 +1,23 @@
-import { Request, Response } from "express";
 import validator from "validator";
 import { addSubscriberTomailingList } from "../email";
 import { EmailApiOutcome } from "../email-utils";
+import { createRoute, Validator } from "../router";
 
+const emailValidator: Validator<string> = ({ email }) =>
+  typeof email === "string" && validator.isEmail(email) ? email : null;
+
+export default createRoute(emailValidator, async (email) => {
+  const outcome = await addSubscriberTomailingList(email.toLowerCase());
+
+  if (outcome === EmailApiOutcome.Success) {
+    return "succeed";
+  } else if (outcome === EmailApiOutcome.Conflict) {
+    return "conflict";
+  }
+  return "failed";
+});
+
+/*
 export default (req: Request, res: Response) => {
   if (
     typeof req.body.email !== "string" ||
@@ -24,3 +39,4 @@ export default (req: Request, res: Response) => {
     }
   });
 };
+*/
