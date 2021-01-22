@@ -5,7 +5,7 @@ type EnvConfig = Record<string, unknown>;
 const newsletterConfig = functions.config().newsletter;
 
 const isValidConfig = (val: unknown): val is EnvConfig =>
-  typeof val === "object" && val != null;
+  typeof val === "object" && val !== null;
 
 if (!isValidConfig(newsletterConfig)) {
   throw new Error("Invalid environment variable config");

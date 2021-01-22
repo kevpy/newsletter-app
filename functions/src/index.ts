@@ -1,16 +1,16 @@
 import * as functions from "firebase-functions";
-import { addSubscriberTomailingList } from "./email";
+import * as express from "express";
+import * as cors from "cors";
+import * as helmet from "helmet";
+import subscribeHandler from "./routes/subscribe";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
+// Newsletter Service entry point
+const app = express();
 
-export const helloWorld = functions.https.onRequest(
-  async (request, response) => {
-    functions.logger.info("Hello logs!", { structuredData: true });
+app.use(cors());
+app.use(helmet());
+app.use(express.json());
 
-    const user = "kibet@example.com";
-    await addSubscriberTomailingList(user);
+app.post("/subscribe", subscribeHandler);
 
-    response.send(`Successfully added ${user} to mailing list!`);
-  }
-);
+export const newsletter = functions.https.onRequest(app);
