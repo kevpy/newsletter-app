@@ -40,8 +40,7 @@ const createMailgunApiData = (op: Operation, email: string): MailgunApiData => {
   }
 };
 
-const createRequest = (
-  op: Operation,
+const createRequest = (op: Operation) => (
   email: string
 ): Promise<EmailApiOutcome> => {
   const { form, endpoint, httpMethod } = createMailgunApiData(op, email);
@@ -60,10 +59,6 @@ const createRequest = (
     .catch(intoEmailOutcome);
 };
 
-export const addSubscriberTomailingList = async (
-  email: string
-): Promise<EmailApiOutcome> => createRequest("subscribe", email);
+export const addSubscriberTomailingList = createRequest("subscribe");
 
-export const unsubscribeUserFromMailingList = async (
-  email: string
-): Promise<EmailApiOutcome> => createRequest("unsubscribe", email);
+export const unsubscribeUserFromMailingList = createRequest("unsubscribe");
