@@ -1,10 +1,6 @@
-import validator from "validator";
 import { addSubscriberTomailingList } from "../email";
-import { createRoute, Validator } from "../router";
-import { intoHandlerResult } from "../utils";
-
-const emailValidator: Validator<string> = ({ email }) =>
-  typeof email === "string" && validator.isEmail(email) ? email : null;
+import { createRoute } from "../router";
+import { intoHandlerResult, emailValidator } from "../utils";
 
 export default createRoute(emailValidator, (email) =>
   addSubscriberTomailingList(email.toLowerCase()).then(intoHandlerResult)

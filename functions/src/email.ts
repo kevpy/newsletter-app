@@ -30,3 +30,27 @@ export const addSubscriberTomailingList = async (
     return intoEmailOutcome(err);
   }
 };
+
+export const unsubscribeUserFromMailingList = async (
+  email: string
+): Promise<EmailApiOutcome> => {
+  const form = new FormData();
+
+  form.append("subscribed", "no");
+
+  const mailingList = `${NEWSLETTER_NAME}@${EMAIL_SENDER_DOMAIN}`;
+  const endpoint = `${BASE_URL}lists/${mailingList}/members/${email}`;
+
+  try {
+    await axios.put(endpoint, form, {
+      auth: {
+        username: "api",
+        password: MAILGUN_API_KEY,
+      },
+      headers: form.getHeaders(),
+    });
+    return EmailApiOutcome.Success;
+  } catch (err) {
+    return intoEmailOutcome(err);
+  }
+};
