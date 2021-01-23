@@ -20,6 +20,10 @@ export const intoHandlerResult = (outcome: EmailApiOutcome): HandlerResult => {
       return "conflict";
     }
 
+    case EmailApiOutcome.NotFound: {
+      return "not_found";
+    }
+
     case EmailApiOutcome.UnknownError: {
       return "failed";
     }

@@ -4,6 +4,7 @@ import { isObject } from "./utils";
 export enum EmailApiOutcome {
   Success,
   Conflict,
+  NotFound,
   UnknownError,
 }
 
@@ -15,6 +16,11 @@ export const intoEmailOutcome = (err: unknown): EmailApiOutcome => {
     if (err?.response?.status === 400) {
       return EmailApiOutcome.Conflict;
     }
+
+    if (err?.response?.status === 404) {
+      return EmailApiOutcome.NotFound;
+    }
+
     console.error(`Unknown Axios error for Email API: ${err}`);
   }
   console.error(`Unknown email API issue: ${err}`);
