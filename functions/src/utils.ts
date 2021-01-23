@@ -4,6 +4,9 @@ import { HandlerResult, Validator } from "./router";
 
 type Obj = Record<string, unknown>;
 
+export const isString = (val: unknown): val is string =>
+  typeof val === "string";
+
 export const emailValidator: Validator<string> = ({ email }) =>
   typeof email === "string" && validator.isEmail(email) ? email : null;
 

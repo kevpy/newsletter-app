@@ -6,6 +6,7 @@ import { AUTH_SECRET } from "./env";
 import { createAuthorizationMiddleware } from "./middleware";
 import subscribeHandler from "./routes/subscribe";
 import unsubscribeHandler from "./routes/unsubsribe";
+import sendNewsletterHandler from "./routes/send-newsletter";
 
 // Newsletter Service entry point
 const app = express();
@@ -19,9 +20,7 @@ app.post("/unsubscribe/", unsubscribeHandler);
 app.post(
   "/send-newsletter",
   createAuthorizationMiddleware(AUTH_SECRET),
-  (req, res) => {
-    res.sendStatus(501);
-  }
+  sendNewsletterHandler
 );
 
 export const newsletter = functions.https.onRequest(app);
